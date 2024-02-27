@@ -1,0 +1,134 @@
+//A12.java
+package JDBC;
+
+import com.mongodb.client.FindIterable;
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.model.Filters;
+import com.mongodb.client.model.Updates;
+import java.util.Scanner;
+import java.util.Iterator;
+import org.bson.Document;
+import com.mongodb.MongoClient;
+
+public class A12 {
+	public static void main(String[] args) {
+		try {
+			Scanner sc = new Scanner(System.in);
+
+			int studentID = 0;
+			String name = "", department = "", city = "";
+
+			MongoClient mongo = new MongoClient("127.0.0.1", 27017);
+
+			System.out.println("\n\t Connected to the database successfully...!!");
+
+			MongoDatabase database = mongo.getDatabase("Student");
+
+			MongoCollection<Document> collection = database.getCollection("Student");
+
+			System.out.println("\n\t Collection Student selected successfully...!!");
+
+			int choice;
+			while (true) {
+				System.out.println("\n\t === Main Menu === \n\t\t 1. Insert Data" + "\n\t\t 2. Display Data"
+						+ "\n\t\t 3. Update Document" + "\n\t\t 4. Delete Document" + "\n\t\t 5. Drop Collection"
+						+ "\n\t\t 6. Exit");
+
+				System.out.print("\n\t Enter Choice: ");
+				choice = sc.nextInt();
+
+				switch (choice) {
+				case 1:
+					System.out.print("\n\t Enter the ID of Student: ");
+					studentID = sc.nextInt();
+					sc.nextLine();
+					System.out.print("\n\t Enter the Name of Student : ");
+					name = sc.nextLine();
+					System.out.print("\n\t Enter the Department of Student: ");
+					department = sc.nextLine();
+					System.out.print("\n\t Enter the City of Student: ");
+					city = sc.nextLine();
+					Document document = new Document("_id", studentID).append("name", name)
+							.append("department", department).append("city", city);
+					collection.insertOne(document);
+					System.out.println("\n\t Document Inserted Successfully...!! \n");
+					break;
+
+				case 2:
+					FindIterable<Document> iterDoc = collection.find();
+					Iterator<Document> it = iterDoc.iterator();
+					while (it.hasNext()) {
+						System.out.println(it.next());
+					}
+					break;
+
+				case 3:
+					int ch = 0;
+					System.out.print("\n\t Enter ID of student to update Data: ");
+					studentID = sc.nextInt();
+					System.out
+							.print("\n\t == UPDATE == \n\t\t 1. Name \n\t\t 2. Department\n\t\t 3. City\n\t\t 4. Cancel"
+									+ "\n\t Enter Choice: ");
+					ch = sc.nextInt();
+					if (ch == 1) {
+						sc.nextLine(); // Consume the newline character
+						System.out.print("\n\t Enter new Name of student: ");
+						name = sc.nextLine();
+						collection.updateOne(Filters.eq("_id", studentID), Updates.set("name", name));
+						System.out.println("\n\t Document Updated Successfully...!!\n");
+					} else if (ch == 2) {
+						System.out.print("\n\t Enter new Department of student: ");
+						department = sc.next();
+						collection.updateOne(Filters.eq("_id", studentID), Updates.set("department", department));
+						System.out.println("\n\t Document Updated Successfully...!!\n");
+					} else if (ch == 3) {
+						System.out.print("\n\t Enter new City of student: ");
+						city = sc.next();
+						collection.updateOne(Filters.eq("_id", studentID), Updates.set("city", city));
+						System.out.println("\n\t Document Updated Successfully...!!\n");
+					} else if (ch == 4) {
+						System.out.println("\n\t Operation Cancelled Successfully...!!");
+						break;
+					} else {
+						System.out.println("\n\t Invalid Choice...!!! \n");
+						break;
+					}
+					break;
+
+				case 4:
+					System.out.print("\n\t Enter ID of student to delete Data: ");
+					studentID = sc.nextInt();
+					collection.deleteOne(Filters.eq("_id", studentID));
+					System.out.println("\n\t Document Deleted Successfully...!!\n");
+					break;
+
+				case 5:
+					collection.drop();
+					System.out.println("\n\t\t\t\t _______ Thank You ..! ______ \n");
+					sc.close();
+					mongo.close();
+					System.exit(0);
+					break;
+
+				case 6:
+					System.out.println("\n\t\t\t\t _______ Thank You ..! ______ \n");
+					sc.close();
+					mongo.close();
+					System.exit(0);
+					break;
+
+				default:
+					System.out.println("\n\t Invalid Choice...!!! \n");
+					break;
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+}
+
+
+
+

@@ -1,0 +1,182 @@
+//A8.java
+package JDBC;
+
+import java.sql.*;
+import java.util.Scanner;
+
+public class A8 {
+
+	public static void main(String[] args) {
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			Scanner sc = new Scanner(System.in);
+
+			String query = "";
+			int studentID = 0;
+			String name = "", dept = "", city = "";
+
+			Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3307/Student", "root", "Ani3303");
+			Statement s = conn.createStatement();
+
+			String firstStatement = "CREATE TABLE IF NOT EXISTS Student (studentID INT PRIMARY KEY, name VARCHAR(30), dept VARCHAR(15), city VARCHAR(15));";
+			s.executeUpdate(firstStatement);
+
+			int choice;
+			while (true) {
+				System.out.println(
+						"\n\t === Main Menu === \n\t\t 1. Insert Data (INSERT) \n\t\t 2. Display Data (SELECT) \n\t\t 3. Update Data (UPDATE) \n\t\t 4. Delete Data (DELETE) \n\t\t 5. Delete Table (DROP) \n\t\t 6. Exit");
+
+				System.out.print("\n\t Enter Choice : ");
+				choice = sc.nextInt();
+
+				switch (choice) {
+				case 1:
+					System.out.print("\n\t Enter the ID of Student: ");
+					studentID = sc.nextInt();
+					sc.nextLine();
+					System.out.print("\n\t Enter the Full Name of Student: ");
+					name = sc.nextLine();
+					System.out.print("\n\t Enter the Dept of Student: ");
+					dept = sc.nextLine();
+					System.out.print("\n\t Enter the City of Student: ");
+					city = sc.nextLine();
+
+					query = "INSERT INTO Student VALUES(" + studentID + ", '" + name + "', '" + dept + "', '"
+							+ city + "');";
+					s.executeUpdate(query);
+					System.out.println("\n\t Record Inserted Successfully...!! \n");
+					break;
+
+				case 2:
+					query = "SELECT * FROM Student";
+					ResultSet rs = s.executeQuery(query);
+
+					System.out.println("\n\t\t\t _______DATA_______ :- \n\n");
+					Setw.left("", 100, '-');
+					System.out.print("\n\t ");
+					Setw.left("studentID", 10);
+					System.out.print(" | ");
+					Setw.left("name", 40);
+					System.out.print(" | ");
+					Setw.left("dept", 15);
+					System.out.print(" | ");
+					Setw.left("city", 20);
+					System.out.println("");
+					Setw.left("", 100, '-');
+					System.out.println("");
+
+					while (rs.next()) {
+						studentID = rs.getInt("studentID");
+						name = rs.getString("name");
+						dept = rs.getString("dept");
+						city = rs.getString("city");
+						System.out.print("\t ");
+						Setw.left(Integer.toString(studentID), 10);
+						System.out.print(" | ");
+						Setw.left(name, 40);
+						System.out.print(" | ");
+						Setw.left(dept, 15);
+						System.out.print(" | ");
+						Setw.left(city, 20);
+						System.out.println("");
+						Setw.left("", 100, '-');
+						System.out.println("");
+					}
+					break;
+
+				case 3:
+					int ch = 0;
+					System.out.print("\n\t Enter ID of student to update Data: ");
+					studentID = sc.nextInt();
+					sc.nextLine();
+					System.out.print(
+							"\n\t\t == UPDATE == \n\t\t\t 1. Full Name \n\t\t\t 2. Dept \n\t\t\t 3. city \n\t\t\t 4. Cancel \n\t\t Enter Choice = ");
+					ch = sc.nextInt();
+
+					if (ch == 1) {
+						sc.nextLine();
+						System.out.print("\n\t Enter new Full Name of student: ");
+						name = sc.nextLine();
+						query = "UPDATE Student SET name = '" + name + "'WHERE studentID = " + studentID + ";";
+						s.executeUpdate(query);
+						System.out.println("\n\t Record Updated Successfully...!!\n");
+					} else if (ch == 2) {
+						sc.nextLine();
+						System.out.print("\n\t Enter new Department of student: ");
+						dept = sc.nextLine();
+						query = "UPDATE Student SET dept = '" + dept + "' WHERE studentID = " + studentID + ";";
+						s.executeUpdate(query);
+						System.out.println("\n\t Record Updated Successfully...!!\n");
+					} else if (ch == 3) {
+						sc.nextLine();
+						System.out.print("\n\t Enter new city of student: ");
+						city = sc.nextLine();
+						query = "UPDATE Student SET city = '" + city + "' WHERE studentID = " + studentID + ";";
+						s.executeUpdate(query);
+						System.out.println("\n\t Record Updated Successfully...!!\n");
+					} else if (ch == 4) {
+						System.out.println("\n\t Operation Cancelled Successfully...!!");
+						break;
+					} else {
+						System.out.println("\n\t Invalid Choice...!!!\n");
+						break;
+					}
+					break;
+
+				case 4:
+					System.out.print("\n\t Enter ID of student to delete Data: ");
+					studentID = sc.nextInt();
+					query = "DELETE FROM Student WHERE studentID = " + studentID + ";";
+					s.executeUpdate(query);
+					System.out.println("\n\t Record Deleted Successfully...!!\n");
+					break;
+
+				case 5:
+					String alert = "", str = "";
+					System.out.print("\n\t Are you sure to DROP TABLE (YES/NO): ");
+					alert = sc.next();
+					str = alert.toLowerCase();
+					if (str.equals("yes")) {
+						query = "DROP TABLE Student;";
+						s.executeUpdate(query);
+					} else {
+						System.out.println("\n\t DROP Operation not Completed...!!\n");
+						break;
+					}
+					System.out.println("\n\t TABLE Dropped Successfully...!! \n");
+					break;
+
+				case 6:
+					System.out.println("\n\t\t\t\t _______ Thank You ..! ______ \n");
+					sc.close();
+					conn.close();
+					System.exit(0);
+					break;
+
+				default:
+					System.out.println("\n\t Invalid Choice...!!!\n");
+					break;
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+}
+
+
+
+//Setw.java
+package JDBC;
+
+public class Setw {
+	public static void left(String str, int width) {
+		left(str, width, ' ');
+	}
+	public static void left(String str, int width, char fill) {
+		System.out.print(str);
+		for (int x = str.length(); x < width; ++x) {
+			System.out.print(fill);
+		}
+	}
+}

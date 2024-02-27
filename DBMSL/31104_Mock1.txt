@@ -1,0 +1,304 @@
+MariaDB [31104_db]> CREATE TABLE Departments( dept_id INT PRIMARY KEY, dept_name VARCHAR(100) );
+Query OK, 0 rows affected (0.169 sec)
+
+MariaDB [31104_db]> CREATE TABLE Professors(prof_id INT PRIMARY KEY,prof_fname VARCHAR(100), prof_lname varchar(100),dept_id INT, designation VARCHAR(100), salary INT,
+doj DATE,email VARCHAR(100),phone VARCHAR(100),city VARCHAR(100), FOREIGN KEY(dept_id) REFERENCES Departments(dept_id) ON DELETE CASCADE ON UPDATE CASCADE );
+Query OK, 0 rows affected (0.290 sec)
+
+MariaDB [31104_db]> CREATE TABLE Works(prof_id INT,dept_id INT,duration INT, FOREIGN KEY(prof_id)REFERENCES Professors(prof_id) ON DELETE CASCADE ON UPDATE CASCADE, FOREIGN KEY(dept_id)REFERENCES Departments(dept_id) ON DELETE CASCADE ON UPDATE CASCADE );
+Query OK, 0 rows affected (0.182 sec)
+
+MariaDB [31104_db]> CREATE TABLE Shift(prof_id INT,shift INT,working_hours INT,FOREIGN KEY(prof_id)REFERENCES Professors(prof_id)ON DELETE CASCADE ON UPDATE CASCADE );
+Query OK, 0 rows affected (0.255 sec)
+
+MariaDB [31104_db]> INSERT INTO Departments VALUES
+    -> (11,'IT'),('21','CE'),(31,'EnTC');
+Query OK, 3 rows affected (0.041 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+MariaDB [31104_db]> INSERT INTO Professors VALUES(1,'Aarush','Balkundi',11,'Associate Professor',50000,'2019-10-21','ajb@gmail.com',12345,'Mumbai');
+Query OK, 1 row affected (0.029 sec)
+
+MariaDB [31104_db]> INSERT INTO Professors VALUES(2,'Aditya','Mittal',21,'Associate Professor',55000,'2019-08-19','amdg@gmail.com',54321,'Nagpur');
+Query OK, 1 row affected (0.031 sec)
+
+MariaDB [31104_db]> INSERT INTO Professors VALUES(3,'Ansh','Bhutada',21,'Assistant Professor',35000,'2021-04-30','asb@gmail.com',13524,'Hyderabad');
+Query OK, 1 row affected (0.032 sec)
+
+MariaDB [31104_db]> INSERT INTO Professors VALUES(4,'Aniruddha','Birage',21,'Professor',100000,'2015-01-01','anb@gmail.com',24135,'Pune');
+Query OK, 1 row affected (0.033 sec)
+
+MariaDB [31104_db]> INSERT INTO Professors VALUES(5,'Aryan','Jasuja',31,'Assistant Professor',52000,'2023-10-04','aj@gmail.com',12354,'Jabalpur');
+Query OK, 1 row affected (0.036 sec)
+
+MariaDB [31104_db]> INSERT INTO Professors VALUES(6,'Atharva','Choudhari',11,'Assistant Professor',39000,'2011-05-23','ac@gmail.com',54123,'Kolkata');
+Query OK, 1 row affected (0.037 sec)
+
+MariaDB [31104_db]> INSERT INTO Professors VALUES(7,'Aditya','Bandgar',31,'Assistant Professor',42000,'2017-12-20','ab@gmail.com',12543,'Kochi');
+Query OK, 1 row affected (0.029 sec)
+
+MariaDB [31104_db]> INSERT INTO Professors VALUES(8,'Nakul','Bhangale',31,'Assistant Professor',51000,'2018-11-18','nb@gmail.com',35124,'Ahmedabad');
+Query OK, 1 row affected (0.037 sec)
+
+MariaDB [31104_db]> INSERT INTO Professors VALUES(9,'Abhishek','Bhosale',21,'Associate Professor',92000,'2021-08-21','abb@gmail.com',42153,'Bangalore');
+Query OK, 1 row affected (0.030 sec)
+
+MariaDB [31104_db]> INSERT INTO Professors VALUES(10,'Sunay','Bhoyar',11,'Professor',89000,'2016-05-19','sbb@gmail.com',25134,'Delhi');
+Query OK, 1 row affected (0.029 sec)
+
+MariaDB [31104_db]> INSERT INTO Works VALUES(1,11,7);
+Query OK, 1 row affected (0.038 sec)
+
+MariaDB [31104_db]> INSERT INTO Works VALUES(2,21,7);
+Query OK, 1 row affected (0.032 sec)
+
+MariaDB [31104_db]> INSERT INTO Works VALUES(3,21,8);
+Query OK, 1 row affected (0.031 sec)
+
+MariaDB [31104_db]> INSERT INTO Works VALUES(4,21,9);
+Query OK, 1 row affected (0.033 sec)
+
+MariaDB [31104_db]> INSERT INTO Works VALUES(5,31,4);
+Query OK, 1 row affected (0.031 sec)
+
+MariaDB [31104_db]> INSERT INTO Works VALUES(6,11,4);
+Query OK, 1 row affected (0.031 sec)
+
+MariaDB [31104_db]> INSERT INTO Works VALUES(7,31,6);
+Query OK, 1 row affected (0.025 sec)
+
+MariaDB [31104_db]> INSERT INTO Works VALUES(8,31,8);
+Query OK, 1 row affected (0.026 sec)
+
+MariaDB [31104_db]> INSERT INTO Works VALUES(9,21,3);
+Query OK, 1 row affected (0.037 sec)
+
+MariaDB [31104_db]> INSERT INTO Works VALUES(10,11,9);
+Query OK, 1 row affected (0.033 sec)
+
+MariaDB [31104_db]> INSERT INTO Shift VALUES(1,3,7);
+Query OK, 1 row affected (0.026 sec)
+
+MariaDB [31104_db]> INSERT INTO Shift VALUES(2,2,8);
+Query OK, 1 row affected (0.036 sec)
+
+MariaDB [31104_db]> INSERT INTO Shift VALUES(3,2,4);
+Query OK, 1 row affected (0.035 sec)
+
+MariaDB [31104_db]> INSERT INTO Shift VALUES(4,1,5);
+Query OK, 1 row affected (0.031 sec)
+
+MariaDB [31104_db]> INSERT INTO Shift VALUES(5,3,3);
+Query OK, 1 row affected (0.026 sec)
+
+MariaDB [31104_db]> INSERT INTO Shift VALUES(6,2,4);
+Query OK, 1 row affected (0.029 sec)
+
+MariaDB [31104_db]> INSERT INTO Shift VALUES(7,3,5);
+Query OK, 1 row affected (0.037 sec)
+
+MariaDB [31104_db]> INSERT INTO Shift VALUES(8,1,3);
+Query OK, 1 row affected (0.036 sec)
+
+MariaDB [31104_db]> INSERT INTO Shift VALUES(9,2,8);
+Query OK, 1 row affected (0.033 sec)
+
+MariaDB [31104_db]> INSERT INTO Shift VALUES(10,1,7);
+Query OK, 1 row affected (0.031 sec)
+
+MariaDB [31104_db]> SELECT * FROM Departments;
++---------+-----------+
+| dept_id | dept_name |
++---------+-----------+
+|      11 | IT        |
+|      21 | CE        |
+|      31 | EnTC      |
++---------+-----------+
+3 rows in set (0.001 sec)
+
+MariaDB [31104_db]> SELECT * FROM Professors;
++---------+------------+------------+---------+---------------------+--------+------------+----------------+-------+-----------+
+| prof_id | prof_fname | prof_lname | dept_id | designation         | salary | doj        | email          | phone | city      |
++---------+------------+------------+---------+---------------------+--------+------------+----------------+-------+-----------+
+|       1 | Aarush     | Balkundi   |      11 | Associate Professor |  50000 | 2019-10-21 | ajb@gmail.com  | 12345 | Mumbai    |
+|       2 | Aditya     | Mittal     |      21 | Associate Professor |  55000 | 2019-08-19 | amdg@gmail.com | 54321 | Nagpur    |
+|       3 | Ansh       | Bhutada    |      21 | Assistant Professor |  35000 | 2021-04-30 | asb@gmail.com  | 13524 | Hyderabad |
+|       4 | Aniruddha  | Birage     |      21 | Professor           | 100000 | 2015-01-01 | anb@gmail.com  | 24135 | Pune      |
+|       5 | Aryan      | Jasuja     |      31 | Assistant Professor |  52000 | 2023-10-04 | aj@gmail.com   | 12354 | Jabalpur  |
+|       6 | Atharva    | Choudhari  |      11 | Assistant Professor |  39000 | 2011-05-23 | ac@gmail.com   | 54123 | Kolkata   |
+|       7 | Aditya     | Bandgar    |      31 | Assistant Professor |  42000 | 2017-12-20 | ab@gmail.com   | 12543 | Kochi     |
+|       8 | Nakul      | Bhangale   |      31 | Assistant Professor |  51000 | 2018-11-18 | nb@gmail.com   | 35124 | Ahmedabad |
+|       9 | Abhishek   | Bhosale    |      21 | Associate Professor |  92000 | 2021-08-21 | abb@gmail.com  | 42153 | Bangalore |
+|      10 | Sunay      | Bhoyar     |      11 | Professor           |  89000 | 2016-05-19 | sbb@gmail.com  | 25134 | Delhi     |
++---------+------------+------------+---------+---------------------+--------+------------+----------------+-------+-----------+
+10 rows in set (0.001 sec)
+
+MariaDB [31104_db]> SELECT * FROM Works;
++---------+---------+----------+
+| prof_id | dept_id | duration |
++---------+---------+----------+
+|       1 |      11 |        7 |
+|       2 |      21 |        7 |
+|       3 |      21 |        8 |
+|       4 |      21 |        9 |
+|       5 |      31 |        4 |
+|       6 |      11 |        4 |
+|       7 |      31 |        6 |
+|       8 |      31 |        8 |
+|       9 |      21 |        3 |
+|      10 |      11 |        9 |
++---------+---------+----------+
+10 rows in set (0.001 sec)
+
+MariaDB [31104_db]> SELECT * FROM Shift;
++---------+-------+---------------+
+| prof_id | shift | working_hours |
++---------+-------+---------------+
+|       1 |     3 |             7 |
+|       2 |     2 |             8 |
+|       3 |     2 |             4 |
+|       4 |     1 |             5 |
+|       5 |     3 |             3 |
+|       6 |     2 |             4 |
+|       7 |     3 |             5 |
+|       8 |     1 |             3 |
+|       9 |     2 |             8 |
+|      10 |     1 |             7 |
++---------+-------+---------------+
+10 rows in set (0.001 sec)
+
+MariaDB [31104_db]> SELECT * FROM Professors WHERE city IN('Pune','Mumbai') OR prof_fname LIKE 'A%' OR prof_fname LIKE 'D%';
++---------+------------+------------+---------+---------------------+--------+------------+----------------+-------+-----------+
+| prof_id | prof_fname | prof_lname | dept_id | designation         | salary | doj        | email          | phone | city      |
++---------+------------+------------+---------+---------------------+--------+------------+----------------+-------+-----------+
+|       1 | Aarush     | Balkundi   |      11 | Associate Professor |  50000 | 2019-10-21 | ajb@gmail.com  | 12345 | Mumbai    |
+|       2 | Aditya     | Mittal     |      21 | Associate Professor |  55000 | 2019-08-19 | amdg@gmail.com | 54321 | Nagpur    |
+|       3 | Ansh       | Bhutada    |      21 | Assistant Professor |  35000 | 2021-04-30 | asb@gmail.com  | 13524 | Hyderabad |
+|       4 | Aniruddha  | Birage     |      21 | Professor           | 100000 | 2015-01-01 | anb@gmail.com  | 24135 | Pune      |
+|       5 | Aryan      | Jasuja     |      31 | Assistant Professor |  52000 | 2023-10-04 | aj@gmail.com   | 12354 | Jabalpur  |
+|       6 | Atharva    | Choudhari  |      11 | Assistant Professor |  39000 | 2011-05-23 | ac@gmail.com   | 54123 | Kolkata   |
+|       7 | Aditya     | Bandgar    |      31 | Assistant Professor |  42000 | 2017-12-20 | ab@gmail.com   | 12543 | Kochi     |
+|       9 | Abhishek   | Bhosale    |      21 | Associate Professor |  92000 | 2021-08-21 | abb@gmail.com  | 42153 | Bangalore |
++---------+------------+------------+---------+---------------------+--------+------------+----------------+-------+-----------+
+8 rows in set (0.001 sec)
+
+MariaDB [31104_db]> SELECT DISTINCT city
+    -> FROM Professors;
++-----------+
+| city      |
++-----------+
+| Mumbai    |
+| Nagpur    |
+| Hyderabad |
+| Pune      |
+| Jabalpur  |
+| Kolkata   |
+| Kochi     |
+| Ahmedabad |
+| Bangalore |
+| Delhi     |
++-----------+
+10 rows in set (0.001 sec)
+
+MariaDB [31104_db]> UPDATE Professors
+    -> SET salary=salary*1.05
+    -> WHERE doj='2015-01-01';
+Query OK, 1 row affected (0.035 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [31104_db]> SELECT * FROM Professors;
++---------+------------+------------+---------+---------------------+--------+------------+----------------+-------+-----------+
+| prof_id | prof_fname | prof_lname | dept_id | designation         | salary | doj        | email          | phone | city      |
++---------+------------+------------+---------+---------------------+--------+------------+----------------+-------+-----------+
+|       1 | Aarush     | Balkundi   |      11 | Associate Professor |  50000 | 2019-10-21 | ajb@gmail.com  | 12345 | Mumbai    |
+|       2 | Aditya     | Mittal     |      21 | Associate Professor |  55000 | 2019-08-19 | amdg@gmail.com | 54321 | Nagpur    |
+|       3 | Ansh       | Bhutada    |      21 | Assistant Professor |  35000 | 2021-04-30 | asb@gmail.com  | 13524 | Hyderabad |
+|       4 | Aniruddha  | Birage     |      21 | Professor           | 105000 | 2015-01-01 | anb@gmail.com  | 24135 | Pune      |
+|       5 | Aryan      | Jasuja     |      31 | Assistant Professor |  52000 | 2023-10-04 | aj@gmail.com   | 12354 | Jabalpur  |
+|       6 | Atharva    | Choudhari  |      11 | Assistant Professor |  39000 | 2011-05-23 | ac@gmail.com   | 54123 | Kolkata   |
+|       7 | Aditya     | Bandgar    |      31 | Assistant Professor |  42000 | 2017-12-20 | ab@gmail.com   | 12543 | Kochi     |
+|       8 | Nakul      | Bhangale   |      31 | Assistant Professor |  51000 | 2018-11-18 | nb@gmail.com   | 35124 | Ahmedabad |
+|       9 | Abhishek   | Bhosale    |      21 | Associate Professor |  92000 | 2021-08-21 | abb@gmail.com  | 42153 | Bangalore |
+|      10 | Sunay      | Bhoyar     |      11 | Professor           |  89000 | 2016-05-19 | sbb@gmail.com  | 25134 | Delhi     |
++---------+------------+------------+---------+---------------------+--------+------------+----------------+-------+-----------+
+10 rows in set (0.001 sec)
+
+MariaDB [31104_db]> DELETE FROM Professors
+    -> WHERE city='Pune';
+Query OK, 1 row affected (0.032 sec)
+
+MariaDB [31104_db]> SELECT * FROM Professors;
++---------+------------+------------+---------+---------------------+--------+------------+----------------+-------+-----------+
+| prof_id | prof_fname | prof_lname | dept_id | designation         | salary | doj        | email          | phone | city      |
++---------+------------+------------+---------+---------------------+--------+------------+----------------+-------+-----------+
+|       1 | Aarush     | Balkundi   |      11 | Associate Professor |  50000 | 2019-10-21 | ajb@gmail.com  | 12345 | Mumbai    |
+|       2 | Aditya     | Mittal     |      21 | Associate Professor |  55000 | 2019-08-19 | amdg@gmail.com | 54321 | Nagpur    |
+|       3 | Ansh       | Bhutada    |      21 | Assistant Professor |  35000 | 2021-04-30 | asb@gmail.com  | 13524 | Hyderabad |
+|       5 | Aryan      | Jasuja     |      31 | Assistant Professor |  52000 | 2023-10-04 | aj@gmail.com   | 12354 | Jabalpur  |
+|       6 | Atharva    | Choudhari  |      11 | Assistant Professor |  39000 | 2011-05-23 | ac@gmail.com   | 54123 | Kolkata   |
+|       7 | Aditya     | Bandgar    |      31 | Assistant Professor |  42000 | 2017-12-20 | ab@gmail.com   | 12543 | Kochi     |
+|       8 | Nakul      | Bhangale   |      31 | Assistant Professor |  51000 | 2018-11-18 | nb@gmail.com   | 35124 | Ahmedabad |
+|       9 | Abhishek   | Bhosale    |      21 | Associate Professor |  92000 | 2021-08-21 | abb@gmail.com  | 42153 | Bangalore |
+|      10 | Sunay      | Bhoyar     |      11 | Professor           |  89000 | 2016-05-19 | sbb@gmail.com  | 25134 | Delhi     |
++---------+------------+------------+---------+---------------------+--------+------------+----------------+-------+-----------+
+9 rows in set (0.001 sec)
+
+MariaDB [31104_db]> SELECT prof_fname,prof_lname
+    -> FROM Professors
+    -> WHERE city='Pune' OR city='Mumbai';
++------------+------------+
+| prof_fname | prof_lname |
++------------+------------+
+| Aarush     | Balkundi   |
++------------+------------+
+1 row in set (0.001 sec)
+
+MariaDB [31104_db]> SELECT * FROM Professors
+    -> WHERE doj='2015-01-01' OR doj='2016-01-01';
+Empty set (0.001 sec)
+
+MariaDB [31104_db]> SELECT prof_fname,prof_lname
+    -> FROM Professors
+    -> WHERE salary=(
+    -> SELECT MAX(salary)
+    -> FROM Professors
+    -> );
++------------+------------+
+| prof_fname | prof_lname |
++------------+------------+
+| Abhishek   | Bhosale    |
++------------+------------+
+1 row in set (0.001 sec)
+
+MariaDB [31104_db]> SELECT prof_fname,prof_lname
+    -> FROM Professors
+    -> WHERE salary>10000 and salary<20000;
+Empty set (0.001 sec)
+
+MariaDB [31104_db]> SELECT prof_fname,prof_lname,salary,doj
+    -> FROM Professors
+    -> ORDER BY (salary) DESC;
++------------+------------+--------+------------+
+| prof_fname | prof_lname | salary | doj        |
++------------+------------+--------+------------+
+| Abhishek   | Bhosale    |  92000 | 2021-08-21 |
+| Sunay      | Bhoyar     |  89000 | 2016-05-19 |
+| Aditya     | Mittal     |  55000 | 2019-08-19 |
+| Aryan      | Jasuja     |  52000 | 2023-10-04 |
+| Nakul      | Bhangale   |  51000 | 2018-11-18 |
+| Aarush     | Balkundi   |  50000 | 2019-10-21 |
+| Aditya     | Bandgar    |  42000 | 2017-12-20 |
+| Atharva    | Choudhari  |  39000 | 2011-05-23 |
+| Ansh       | Bhutada    |  35000 | 2021-04-30 |
++------------+------------+--------+------------+
+9 rows in set (0.001 sec)
+
+MariaDB [31104_db]> SELECT prof_fname,prof_lname,doj,dept_id
+    -> FROM Professors
+    -> WHERE salary=30000 OR salary=40000 OR salary=50000;
++------------+------------+------------+---------+
+| prof_fname | prof_lname | doj        | dept_id |
++------------+------------+------------+---------+
+| Aarush     | Balkundi   | 2019-10-21 |      11 |
++------------+------------+------------+---------+
+1 row in set (0.001 sec)
